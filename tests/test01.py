@@ -15,11 +15,16 @@ def pshow(smt):
 
 def test_des():
     from py3mschap import des
-    meth = des.DES("somesecr")
-    txt = "plaintext"
+    meth = des.DES(b"somesecr")
+    txt = b"plaintext"
     enc = meth.encrypt(txt)
+
+    show("des enc:")
+    pshow(enc)
     dec = meth.decrypt(enc)
 
+    show("des dec:")
+    pshow(enc)
     if not txt.startswith(dec):
         return False
 
@@ -62,6 +67,8 @@ def test_mppe_rad2():
 
     return True
 
+def test_mschap1():
+    from py3mschap import mschap
 
 def scream(msg: str):
     print()
@@ -70,7 +77,7 @@ def scream(msg: str):
 
 
 if __name__ == "__main__":
-    DEBUK=False
+    # DEBUK = False
 
     print("\nDES tests")
     if not test_des(): scream("des failed")

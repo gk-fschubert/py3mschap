@@ -8,12 +8,12 @@ from . import md4
 from . import utils
 
 
-def challenge_hash(peer_challenge, authenticator_challenge, username):
+def challenge_hash(peer_challenge, authenticator_challenge, username: str):
     """ChallengeHash"""
     sha_hash = hashlib.sha1()
     sha_hash.update(peer_challenge)
     sha_hash.update(authenticator_challenge)
-    sha_hash.update(username)
+    sha_hash.update(bytes(username, encoding='latin1'))
     return sha_hash.digest()[:8]
 
 
@@ -32,6 +32,11 @@ def hash_nt_password_hash(password_hash):
     return md4_context.digest()
 
 
+def generate_lm_response_mschap(challenge, password):
+    password_hash = lm_password_hash(password)
+    return challenge_response(challenge, password_hash)
+
+
 def generate_nt_response_mschap(challenge, password):
     password_hash = nt_password_hash(password)
     return challenge_response(challenge, password_hash)
@@ -45,11 +50,11 @@ def generate_nt_response_mschap2(authenticator_challenge, peer_challenge, userna
 
 
 
-def challenge_response(challenge, password_hash):
+def challenge_response(challenge: bytes, password_hash: bytes) -> bytes:
     """ChallengeResponse"""
-    zpassword_hash = password_hash.ljust(21, '\0')
+    zpassword_hash = password_hash.ljust(21, b'\0')
 
-    response = ""
+    response = b""
     des_obj = des.DES(zpassword_hash[0:7])
     response += des_obj.encrypt(challenge)
 
@@ -109,13 +114,13 @@ def lm_password_hash(password):
     ucase_password = password.upper()[:14]
     while len(ucase_password) < 14:
         ucase_password += "\0"
-    password_hash = des_hash(ucase_password[:7])
-    password_hash += des_hash(ucase_password[7:])
+    password_hash = des_hash(bytes(ucase_password[:7], encoding='latin1'))
+    password_hash += des_hash(bytes(ucase_password[7:], encoding='latin1'))
     return password_hash
 
 
 def des_hash(clear):
     """DesEncrypt"""
     des_obj = des.DES(clear)
-    return des_obj.encrypt(r"KGS!@#$%")
+    return des_obj.encrypt(b"KGS!@#$%")
 

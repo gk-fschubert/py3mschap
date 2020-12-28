@@ -154,28 +154,30 @@ class DES:
         self.KeySched = des_set_key(key)
         #print 'schedule:', self.KeySched, len(self.KeySched)
 
-    def decrypt(self, str):
+    def decrypt(self, ciphertext: bytes) -> bytes:
         # block - UChar[]
-        block = []
-        for i in str: block.append(ord(i))
-        #print block
+        block = b''
+        for i in ciphertext:
+            block += bytes([i])
+
         block = des_ecb_encrypt(block, self.KeySched, 0)
-        res = ''
-        for i in block: res = res + (chr(i))
+        res = b''
+        for i in block:
+            res = res + (bytes([i]))
         return res
 
-    def encrypt(self, str):
+    def encrypt(self, plaintext: bytes):
         # block - UChar[]
-        block = []
-        for i in str: block.append(ord(i))
+        block = b''
+        for i in plaintext:
+            block += bytes([i])
+
         block = des_ecb_encrypt(block, self.KeySched, 1)
-        res = ''
-        for i in block: res = res + (chr(i))
+        res = b''
+        for i in block:
+            res = res + bytes([i])
+
         return res
-
-
-
-
 
 
 #------------------------
@@ -236,7 +238,8 @@ def des_encript(input, ks, encrypt):
     l, r, t, u = U32.U32(0), U32.U32(0), U32.U32(0), U32.U32(0)
     return output
 
-def des_ecb_encrypt(input, ks, encrypt):
+
+def des_ecb_encrypt(input: bytes, ks, encrypt):
     # input - des_cblock - UChar[8]
     # output - des_cblock - UChar[8]
     # ks - des_key_shedule - U32[2][16]

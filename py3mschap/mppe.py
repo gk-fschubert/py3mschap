@@ -270,7 +270,7 @@ def xor(str1: str, str2: str) -> str:
 
 def xor_bytes(str1: bytes, str2: bytes) -> bytes:
 
-    ret = bytes();
+    ret = bytes()
     for (a, b) in zip(str1, str2):
         x = a ^ b
         ret += bytes([x])
