@@ -1,17 +1,18 @@
 from setuptools import setup
 
 setup(
-    name='pymschap',
+    name='py3mschap',
     version='0.1',
-    packages=['pymschap'],
-    url='https://github.com/talkincode/pymschap',
+    packages=['py3mschap'],
+    url='https://github.com/astibal/py3mschap',
     license='LGPL',
-    author='jamiesun',
-    author_email='jamiesun.net@gmail.com',
-    description='python mschap module', long_description=open('README.md').read(),
+    author='Ales Stibal',
+    author_email='astib@mag0.net',
+    description='python3 mschap module', long_description=open('README.md').read(),
     classifiers=[
-        'Development Status :: 6 - Mature', 'Intended Audience :: Developers',
-        'Programming Language :: Python :: 2.7', 'Topic :: Software Development :: Libraries :: Python Modules',
+        'Development Status :: 4 - Beta', 'Intended Audience :: Developers',
+        'Programming Language :: Python :: 3.6', 'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    keywords=['mschap','mschapv1', 'mschapv2','pymschap'],
+    keywords=['mschap','mschapv1', 'mschapv2','py3mschap'],
+    long_description_content_type='text/markdown'
 )

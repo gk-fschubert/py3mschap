@@ -1,6 +1,7 @@
-import mschap
 import hashlib
 import random
+
+from . import mschap
 
 SHSpad1 = \
     "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" + \
@@ -206,15 +207,16 @@ def create_salts():
 def create_salt():
     return chr(128 + random.randrange(0, 128)) + chr(random.randrange(0, 256))
 
+
 def gen_radius_encrypt_keys(send_key, recv_key, secret, request_authenticator):
     send_salt, recv_salt = create_salts()
-    _send_key = send_salt + radius_encrypt_keys(
+    _send_key = bytes(send_salt, encoding='latin1') + radius_encrypt_keys(
         create_plain_text(send_key),
         secret,
         request_authenticator,
         send_salt
     )
-    _recv_key = recv_salt + radius_encrypt_keys(
+    _recv_key = bytes(recv_salt, encoding='latin1') + radius_encrypt_keys(
         create_plain_text(recv_key),
         secret,
         request_authenticator,
@@ -251,19 +253,29 @@ def radius_encrypt_keys(plain_text, secret, request_authenticator, salt):
       The   resulting   encrypted   String   field    will    contain
       c(1)+c(2)+...+c(i).
     """
-    i = len(plain_text) / 16
-    b = hashlib.new("md5", secret + request_authenticator + salt).digest()
-    c = xor(plain_text[:16], b)
+    i = int (len(plain_text) / 16)
+    b = hashlib.new("md5", bytes(secret + request_authenticator + salt, encoding="latin1")).digest()
+    c = xor_bytes(bytes(plain_text[:16], encoding="latin1"), b)
     result = c
     for x in range(1, i):
-        b = hashlib.new("md5", secret + c).digest()
-        c = xor(plain_text[x * 16:(x + 1) * 16], b)
+        b = hashlib.new("md5", bytes(secret, encoding="latin1") + c).digest()
+        c = xor_bytes(bytes(plain_text[x * 16:(x + 1) * 16], encoding="latin1"), b)
         result += c
     return result
 
 
-def xor(str1, str2):
+def xor(str1: str, str2: str) -> str:
     return ''.join(map(lambda s1, s2: chr(ord(s1) ^ ord(s2)), str1, str2))
+
+
+def xor_bytes(str1: bytes, str2: bytes) -> bytes:
+
+    ret = bytes();
+    for (a, b) in zip(str1, str2):
+        x = a ^ b
+        ret += bytes([x])
+
+    return ret
 
 
 def verify_radius_request(ms_chap_response, authenticator_challenge, username, userpwd, secret, authenticator):

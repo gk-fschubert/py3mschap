@@ -1,8 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #coding:utf-8
 
 
-import des_c, utils
+from . import des_c
+from . import utils
 
 #---------------------------------------------------------------------
 class DES:

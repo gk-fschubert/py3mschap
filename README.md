@@ -1,9 +1,23 @@
-# pymschap
+# py3mschap
 
-python mschap 
+First of all I hereby acknowledge this is not my original work. This repo 
+is based on work of `jamiesun.net@gmail.com`, original repo is
+ 
+[https://github.com/talkincode/pymschap](https://github.com/talkincode/pymschap). 
+ 
+### Why I decided to fork it and rename it
+
+ * I needed python3 pip package
+ * repo is left with much of care, where I need my own code base with possibility to extend it
+ * I have quite bad experience with pr->fix->pip cycle flow
+
+### What you can expect here  
+If everything is running ok, probably some more from radius related mechanisms implemented 
+in my simple radius **testing mini-server** [raok](https://github.com/astibal/raok).
+This module will be used there and via pip3 maintained for further improvements.
 
 
-# Example
+ ##### Original example provided by Jamie
 
 
     def verify_radius_request(ms_chap_response,authenticator_challenge,username,userpwd,secret,authenticator):
