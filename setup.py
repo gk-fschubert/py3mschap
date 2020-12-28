@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='py3mschap',
-    version='0.1',
+    version='0.1post2',
     packages=['py3mschap'],
     url='https://github.com/astibal/py3mschap',
     license='LGPL',
