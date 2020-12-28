@@ -111,15 +111,15 @@ def convert_to_hex_string(string):
 
 def lm_password_hash(password):
 
-    ucase_password = password.upper()[:14]
-    while len(ucase_password) < 14:
-        ucase_password += "\0"
-    password_hash = des_hash(bytes(ucase_password[:7], encoding='latin1'))
-    password_hash += des_hash(bytes(ucase_password[7:], encoding='latin1'))
+    ucase_password_bytes = bytes(password.upper()[:14], encoding='ascii')
+    while len(ucase_password_bytes) < 14:
+        ucase_password_bytes += bytes([0])
+    password_hash = des_hash(ucase_password_bytes[:7])
+    password_hash += des_hash(ucase_password_bytes[7:])
     return password_hash
 
 
-def des_hash(clear):
+def des_hash(clear: bytes):
     """DesEncrypt"""
     des_obj = des.DES(clear)
     return des_obj.encrypt(b"KGS!@#$%")

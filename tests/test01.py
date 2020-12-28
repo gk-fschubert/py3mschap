@@ -24,7 +24,7 @@ def test_des():
     dec = meth.decrypt(enc)
 
     show("des dec:")
-    pshow(enc)
+    pshow(dec)
     if not txt.startswith(dec):
         return False
 

@@ -175,7 +175,7 @@ class DES:
         block = des_ecb_encrypt(block, self.KeySched, 1)
         res = b''
         for i in block:
-            res = res + bytes([i])
+            res += bytes([i])
 
         return res
 
