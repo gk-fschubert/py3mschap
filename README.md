@@ -8,7 +8,7 @@ is based on work of `jamiesun.net@gmail.com`, original repo is
 ### Why I decided to fork it and rename it
 
  * I needed python3 pip package
- * repo is left with much of care, where I need my own code base with possibility to extend it
+ * repo is left without much of care, where I need my own code base with possibility to extend it
  * I have quite bad experience with pr->fix->pip cycle flow
 
 ### What you can expect here  

@@ -45,7 +45,7 @@ def test_mppe_rad1():
     from py3mschap import mppe
 
     show("mppe.radius_encrypt_keys:")
-    enc = mppe.radius_encrypt_keys("sdfas", "radpass", "sadfsdfs", "sdfsd")
+    enc = mppe.radius_encrypt_keys(b"sdfas", b"radpass", b"sadfsdfs", b"sdfsd")
     pshow(enc)
 
     return True
@@ -54,10 +54,10 @@ def test_mppe_rad2():
     from py3mschap import mppe
 
     show("gen_radius_encrypt_keys:")
-    user_pass = "sdfas"
-    rad_pass = "radpass"
-    secret = "sadfsdfs"
-    rq_auth = "sdfsd"
+    user_pass = b"sdfas"
+    rad_pass = b"radpass"
+    secret = b"sadfsdfs"
+    rq_auth = b"sdfsd"
     send_key, recv_key = mppe.gen_radius_encrypt_keys(user_pass, rad_pass, secret, rq_auth)
 
     show("send_key")

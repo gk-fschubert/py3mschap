@@ -90,8 +90,17 @@ class MD4:
     #-----------------------------------------------------
     def update(self, str):
 
+        input_is_bytes = True
+        if type(str) == type(""):
+            input_is_bytes = False
+
         buf = []
-        for i in str: buf.append(ord(i))
+        for i in str:
+            if input_is_bytes:
+                buf.append(i)
+            else:
+                buf.append(ord(i))
+
         ilen = U32(len(buf))
 
         # check if the first length is out of range
