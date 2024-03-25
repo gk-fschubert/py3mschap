@@ -255,7 +255,7 @@ def f3(a, b, c, d, k, s, X): return ROL(a + H(b, c, d) + X[k] + U32(0x6ed9eba1),
 def int_array2str(array):
         str = ''
         for i in array:
-            str = str + chr(i)
+            str = str + chr(int(i))
         return str
 
 #--------------------------------------------------------------------
